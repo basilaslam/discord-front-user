@@ -1,0 +1,13 @@
+// import React from 'react';
+// import { BrowserRouter } from 'react-router-dom';
+// import ReactDOM from 'react-dom/client';
+// import App from './App';
+// import './index.css';
+// import axios from 'axios';
+// import { AuthProvider } from 'react-auth-kit';
+
+// axios.defaults.baseURL = 'http://localhost:4000';
+
+// ReactDOM.createRoot(document.getElementById('root')).render(
+
+// );

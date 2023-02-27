@@ -1,0 +1,5 @@
+[X] = ABC Ginto Nord,
+[X] = Noto Sans,
+Helvetica Neue,
+Helvetica,
+Arial,sans-serif;
