@@ -1,22 +1,24 @@
 import React from 'react';
 
-function message () {
+
+
+
+const Message = ({ name, timestamp, text }: { name: string, timestamp: string, text: string }) => {
+  const seed = Math.round(Math.random() * 100);
   return (
-    <div>from basil aslam
-         sdfgdfguhdsflgkjhdfsg
-         sdfgjsdfgkjhsdfglosder
-          ;'sdfugjsldofkgjsdf'g
+    <div className="post">
+      <div className='post_left'>
+        <img src={`https://avatars.dicebear.com/api/open-peeps/${seed}.svg`} alt='' className='avatar' />
+      </div> 
 
-          sdg;sdfikljgs;dflgksdf
-          gsdfjg;oasdfkgjs df'g;osd;fogijsdfaspdioukmgnse
-          gpsdfkg ;osdfrgkshjfgn deswsdfg k,.asjdngads .fjklng0sdkfsdmrf ngkl;.idsa fjgm ,.ds fgpsdjfkmg,.kasdr jfgaklmse dr,fgmmjn g dfsil;
-          dfg;ksdf;oglsdkfga=e\fga;f0pgokmasdf, mg adops'fjkgk oliasdj fgkl;ijsdh fg90aswoifugjsx, cfnkl.jsdfjgn;odsifugjads;florfkgnmlaodsfikgj asp-rp-fgi9oujkasmdfl;vk
-          knjjasd;lkfjasdf
-           sad;fkiadjsf
-           pasdfo;jfgaklmseasdkfjha'sdpfp
-
+      <div className='post_right'>
+        <p className='post_right_p'>
+          {name}
+          <small className='post_right_small'>{timestamp}</small>
+        </p>
+        <p className='post_right_text'>{text}</p>
+      </div>
     </div>
   );
-}
-
-export default message;
+};
+export default Message;

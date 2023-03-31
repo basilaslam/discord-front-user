@@ -2,64 +2,87 @@
 import React, { useState, useRef} from "react";
 import UploadImage from "../../assets/iconComponents/uploadImage";
 import axios from "axios";
-const CreateServerForm = ({ onClick }: { onClick?: () => void }) => {
+import storage from '../../firebase/firebaseConfig'
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import 'firebase/storage';
+
+
+import { nanoid } from 'nanoid';
+import { usePopupStore, useServerssStore } from "../../store/zustand";
+
+const CreateServerForm = () => {
+
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | undefined>();
   const [serverName, setServerName] = useState<string>("");
+  const [imgUrl, setImgUrl] = useState<string>("");
+  const [progressUpload, setProgressUpload] = useState(0)
+  const { updateServers } = useServerssStore()
+  const { isOpen, setIsOpen} = usePopupStore()
+
   const warning = useRef<HTMLInputElement>(null);
+
+  const createNewServer = async (imageUrl:string) =>{
+
+    const form = {
+      serverName : serverName,
+      image: imageUrl
+    }
+    const response = await axios.post('server/create', form);
+    updateServers()
+    setIsOpen(!isOpen)
+    // Clear the form
+    setSelectedFile(null);
+    setImagePreview(undefined);
+    setServerName("");
+  }
+
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if(!serverName){
-      
+      warning.current?.setCustomValidity("Name field can't be empty");
+      return
     }
     try {
-      let imageUrl;
     if (selectedFile) {
-      
-    
+      const name = (nanoid()+selectedFile.name)
+      const storageRef = ref(storage, `logo/${name}`)
+      const uploadTask = uploadBytesResumable(storageRef, selectedFile)
 
+       uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
 
-      const {data} = await axios.get('/s3/getUrl')
-      // using fetch because axios is not sending the file properly
-      const res = await fetch(data, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'multipart/form-data',
+          setProgressUpload(progress) // to show progress upload
+
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused')
+              break
+            case 'running':
+              console.log('Upload is running')
+              break
+          }
         },
-        body: selectedFile,
-      });
-
-console.log(res);
-
-       imageUrl = data.split('?')[0]
-      // Add Server
-
-
-
+        (error) => {
+          console.log(error.message)
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            //url is download url of file
+            createNewServer(url)
+          })
+        },
+      )
       }else{
-        imageUrl = `https://api.dicebear.com/5.x/initials/svg?seed=${serverName}`
-      }
-      const form = {
-        serverName : serverName,
-        image: imageUrl
+      const imageUrl = `https://api.dicebear.com/5.x/initials/svg?seed=${serverName}`
+        createNewServer(imageUrl)
       }
 
-      const response = await axios.post('server/create', form);
-
-
-        console.log(response)
-
-      console.log(imageUrl)
-      // Clear the form
-      setSelectedFile(null);
-      setImagePreview(undefined);
-      setServerName("");
-
-      // Call the onClick prop to close the form
-      if (onClick) {
-        onClick();
-      }
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +91,6 @@ console.log(res);
   // Implement your create account form here
   return (
     <>
-      <div onClick={onClick} className="bg_gray"></div>
       <div className="create_server_form">
         <div className="form_div">
           <div className="form_header">
@@ -81,7 +103,7 @@ console.log(res);
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="server_form_label" htmlFor="server-image">
-                {imagePreview ? (
+                {selectedFile ? (
                   <img
                     className="server_icon_preview"
                     src={imagePreview}
@@ -106,7 +128,6 @@ console.log(res);
               />
             </div>
             <div className="mb_4">
-              <p ref={warning}></p>
               <label className="server_form_label" htmlFor="server-name">
                 Server Name
               </label>
@@ -114,6 +135,7 @@ console.log(res);
                 className="server_form_input"
                 id="server-name"
                 type="text"
+                ref={warning}
                 placeholder="Enter server name"
                 value={serverName}
                 onChange={(event) => setServerName(event.target.value)}

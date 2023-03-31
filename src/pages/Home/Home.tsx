@@ -7,6 +7,7 @@ import hangingOut from '../../../assets/hanging_out_easy_landing.svg';
 import fandom from '../../../assets/fandom_landing.svg';
 import chiling from '../../../assets/just_chiling_landing.svg';
 import stars from '../../../assets/tiny_stars_landing.svg';
+import { Link } from "react-router-dom";
 const  Home:React.FC = () => {
   return (
     <>
@@ -18,8 +19,9 @@ const  Home:React.FC = () => {
                 <h1 className="hero_text_h1">IMAGINE A PLACE...</h1>
                 <p className="hero_p">...where you can belong to a school club, a gaming group, or a worldwide art community. Where just you and a handful of friends can spend time together. A place that makes it easy to talk every day and hang out more often.</p>
                 <div className="hero_cta_wrapper">
-                    <button className="hero_buttons_mac"><i className="fa-solid fa-download"></i> Download for Mac</button>
-                    <button className="hero_buttons_browser">Open Discord</button>
+                    <button type="button" className="hero_buttons_mac"><i className="fa-solid fa-download"></i> Download for Mac</button>
+                    <Link to={'/app'}><button type="button" className="hero_buttons_browser">Open Discord</button></Link>
+                    
                 </div>
             </div>
         </section>
@@ -62,8 +64,6 @@ const  Home:React.FC = () => {
             </div>
             <div className="home_section3">
                 <img src={stars} />
-                <h2 className="home_section4_h2 ">Ready to start your journey?</h2>
-                <div className="home_section4_download"><i className="fa-solid fa-download"></i> Download for Windows</div>
             </div>
         </section>
 

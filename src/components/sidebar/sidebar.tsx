@@ -1,37 +1,59 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { BsPlus, BsFillLightningFill, BsGearFill } from 'react-icons/bs';
-import { FaFire, FaPoo } from 'react-icons/fa';
-import CreateServerForm from '../createServer/createServerForm';
+import { FaFire } from 'react-icons/fa';
+import axios from 'axios';
+import { usePopupStore, useServerListStore, useServerStore, useServerssStore } from '../../store/zustand';
+import { Server } from '../../store/types';
 const SideBar = () => {
-  const [showCreateAccountForm, setShowCreateAccountForm] = useState(false);
-  const toggleCreateAccountForm = () => {1
-    console.log(!showCreateAccountForm)
-    setShowCreateAccountForm(!showCreateAccountForm);
-  };
+  const {servers, setServers} = useServerssStore()
+  const {setServer} = useServerStore()
+  const {isListOpen, setListOpen} = useServerListStore()
+
+  useEffect(() => {
+    const getData = async () =>{
+    const data = await axios.get('/server/listServers')
+    console.log(data)
+    setServers(data.data)
+    }
+    getData()
+  }, [])
+  
+
+
+
 
   return (
     <div className="sidebar_container">
-      <SideBarIcon icon={<FaFire size="28" />} link='/channel/create'/>
+      <SideBarIcon icon={<FaFire size="28" />}/>
       <Divider />
-      <SideBarIcon icon={<BsPlus size="32" />} link='/channel/create' onClick={toggleCreateAccountForm} />
-      <SideBarIcon icon={<BsFillLightningFill size="20" />} link='/channel/create' />
-      <SideBarIcon icon={<FaPoo size="20" />} link='/channel/create'/>
+{servers&&servers.map((server)=>{
+
+  return (<SideBarIcon icon={<Icon src={server.logo} />} key={server._id}  onClick={()=> setServer(server)}/>)
+})}
+      <SideBarIcon icon={<BsPlus size="32" />}  create={true}/>
+      <SideBarIcon icon={<BsFillLightningFill size="20" />}  onClick={() => setListOpen(!isListOpen)}/>
       <Divider />
-      <SideBarIcon icon={<BsGearFill size="22" />} link='/channel/create'/>
-      {showCreateAccountForm && <CreateServerForm onClick = {toggleCreateAccountForm}/>}
+      <SideBarIcon icon={<BsGearFill size="22" />} />
     </div>
   );
 };
 export default SideBar;
 
+const Icon = (_props: { src: string | undefined; }) =>{
 
-const SideBarIcon = ({ icon, text = 'tooltip 💡', link, onClick }: { icon: ReactNode, text?: string, link:string, onClick?:()=> void}) => {
-  
+
+  return (
+    <img className='sidebar_icon' src={_props.src} alt="" />
+  )
+}
+const SideBarIcon = ({ icon, text = 'tooltip 💡', onClick, create }: { icon: ReactNode,create?: boolean, text?: string, onClick?:()=> void}) => {
+  const {isOpen, setIsOpen, setMessage} = usePopupStore()
+
 
   const handleClick = () => {
-    if (onClick) {
-      onClick();
-    }
+      create && setIsOpen(!isOpen)
+      create && setMessage('createServer') 
+      onClick && onClick()
   };
 
   return (

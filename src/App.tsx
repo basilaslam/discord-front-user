@@ -8,7 +8,9 @@ import { AuthProvider, RequireAuth } from 'react-auth-kit';
 import Test from './pages/Test/test';
 import React from 'react';
 
+
 function App () {
+  
   return (
     <AuthProvider authType = {'localstorage'}
                   authName={'_auth'}

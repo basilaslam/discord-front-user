@@ -1,0 +1,68 @@
+{
+  "status": 200,
+  "data": [
+    {
+      "_id": "641fc85cdc7049ac6c8a8135",
+      "chatId": "6412c3f21600ad8524b70fea",
+      "senderId": { "_id": "641301cec8f201a6a7d1b79d", "username": "testbasil", "email": "basilaslamnp@gmail.com" },
+      "text": "hh",
+      "createdAt": "2023-03-26T04:21:48.818Z",
+      "updatedAt": "2023-03-26T04:21:48.818Z",
+      "__v": 0
+    },
+    {
+      "_id": "641fe8b8dc7049ac6c8ac549",
+      "chatId": "6412c3f21600ad8524b70fea",
+      "senderId": { "_id": "641301cec8f201a6a7d1b79d", "username": "testbasil", "email": "basilaslamnp@gmail.com" },
+      "text": "hi",
+      "createdAt": "2023-03-26T06:39:52.777Z",
+      "updatedAt": "2023-03-26T06:39:52.777Z",
+      "__v": 0
+    },
+    {
+      "_id": "641fe8bfdc7049ac6c8ac54b",
+      "chatId": "6412c3f21600ad8524b70fea",
+      "senderId": { "_id": "641301cec8f201a6a7d1b79d", "username": "testbasil", "email": "basilaslamnp@gmail.com" },
+      "text": "hello",
+      "createdAt": "2023-03-26T06:39:59.418Z",
+      "updatedAt": "2023-03-26T06:39:59.418Z",
+      "__v": 0
+    },
+    {
+      "_id": "641fe92edc7049ac6c8ac553",
+      "chatId": "6412c3f21600ad8524b70fea",
+      "senderId": null,
+      "text": "hi",
+      "createdAt": "2023-03-26T06:41:50.377Z",
+      "updatedAt": "2023-03-26T06:41:50.377Z",
+      "__v": 0
+    },
+    {
+      "_id": "641fe935dc7049ac6c8ac555",
+      "chatId": "6412c3f21600ad8524b70fea",
+      "senderId": null,
+      "text": "jj",
+      "createdAt": "2023-03-26T06:41:57.788Z",
+      "updatedAt": "2023-03-26T06:41:57.788Z",
+      "__v": 0
+    },
+    {
+      "_id": "641fe937dc7049ac6c8ac557",
+      "chatId": "6412c3f21600ad8524b70fea",
+      "senderId": null,
+      "text": "jjjj",
+      "createdAt": "2023-03-26T06:41:59.752Z",
+      "updatedAt": "2023-03-26T06:41:59.752Z",
+      "__v": 0
+    },
+    {
+      "_id": "641fe93ddc7049ac6c8ac559",
+      "chatId": "6412c3f21600ad8524b70fea",
+      "senderId": { "_id": "641301cec8f201a6a7d1b79d", "username": "testbasil", "email": "basilaslamnp@gmail.com" },
+      "text": "gttt",
+      "createdAt": "2023-03-26T06:42:05.907Z",
+      "updatedAt": "2023-03-26T06:42:05.907Z",
+      "__v": 0
+    }
+  ]
+}
